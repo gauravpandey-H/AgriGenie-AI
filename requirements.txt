@@ -6,3 +6,4 @@ xgboost
 python-dotenv
 requests
 Pillow
+whitenoise
