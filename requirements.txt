@@ -8,3 +8,4 @@ requests
 Pillow
 whitenoise
 gunicorn
+whitenoise==6.12.0
