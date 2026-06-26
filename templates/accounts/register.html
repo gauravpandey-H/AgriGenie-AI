@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}AgriGenie AI - Register{% endblock %}
+
+{% block content %}
+<div class="container py-5 mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="glass-panel p-5">
+                <div class="text-center mb-4">
+                    <i class="fa-solid fa-user-plus text-success fa-3x mb-3"></i>
+                    <h3 class="fw-bold">Create an Account</h3>
+                    <p class="text-muted">Join the AgriGenie AI platform</p>
+                </div>
+                
+                <form method="POST">
+                    {% csrf_token %}
+                    
+                    <h5 class="fw-bold mt-4 mb-3 text-success">Account Details</h5>
+                    {{ u_form.as_p }}
+                    
+                    <h5 class="fw-bold mt-4 mb-3 text-success">Farm Details</h5>
+                    {{ p_form.as_p }}
+                    
+                    <button type="submit" class="btn btn-success w-100 rounded-pill py-2 mt-4">Sign Up</button>
+                </form>
+                
+                <div class="text-center mt-4">
+                    <p class="text-muted small">Already have an account? <a href="{% url 'login' %}" class="text-success fw-bold text-decoration-none">Log In</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Quick styling for django model forms */
+    input[type="text"], input[type="password"], input[type="email"], select {
+        width: 100%;
+        padding: 0.75rem;
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+        background: rgba(255, 255, 255, 0.8);
+        margin-bottom: 0.5rem;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}AgriGenie AI - Disease Diagnosis{% endblock %}
+
+{% block content %}
+<div class="container py-5 mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="glass-panel p-5">
+                <div class="row align-items-center">
+                    <div class="col-md-5 text-center mb-4 mb-md-0">
+                        <img src="{{ prediction.image.url }}" alt="Uploaded Leaf" class="img-fluid rounded shadow-sm" style="max-height: 300px; object-fit: cover;">
+                    </div>
+                    <div class="col-md-7">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fa-solid fa-biohazard text-danger fa-2x me-3"></i>
+                            <div>
+                                <h2 class="fw-bold mb-0 text-danger">{{ prediction.disease_name }}</h2>
+                                <span class="badge bg-danger rounded-pill">Confidence: {{ prediction.confidence_score|floatformat:2 }}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h5 class="fw-bold"><i class="fa-solid fa-pills text-success"></i> Recommended Medicine</h5>
+                            <p class="text-muted">{{ prediction.medicine }}</p>
+                            
+                            <h5 class="fw-bold"><i class="fa-solid fa-hand-holding-medical text-primary"></i> Treatment Plan</h5>
+                            <p class="text-muted">{{ prediction.treatment }}</p>
+                            
+                            <h5 class="fw-bold"><i class="fa-solid fa-shield-virus text-warning"></i> Prevention</h5>
+                            <p class="text-muted">{{ prediction.prevention }}</p>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary rounded-pill px-4 me-2">Dashboard</a>
+                            <a href="{% url 'disease_detect' %}" class="btn btn-danger rounded-pill px-4">Scan Another Leaf</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

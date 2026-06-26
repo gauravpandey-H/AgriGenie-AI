@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}AgriGenie AI - Prediction Result{% endblock %}
+
+{% block content %}
+<div class="container py-5 mt-5 text-center">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="glass-panel p-5 position-relative overflow-hidden">
+                <div class="position-absolute top-0 start-0 w-100 h-100" style="background: url('https://source.unsplash.com/800x600/?farm,wheat') center/cover; opacity: 0.1; z-index: -1;"></div>
+                
+                <i class="fa-solid fa-check-circle text-success fa-4x mb-3 floating-element"></i>
+                <h2 class="fw-bold">We found the perfect crop!</h2>
+                
+                <div class="display-1 fw-bold text-success my-4">{{ record.recommended_crop }}</div>
+                
+                <div class="row text-center mt-4 g-4">
+                    <div class="col-md-4">
+                        <div class="p-3 bg-white bg-opacity-50 rounded shadow-sm">
+                            <h6 class="text-muted mb-1">Confidence Score</h6>
+                            <h4 class="fw-bold mb-0">{{ prediction.confidence|floatformat:2 }}</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 bg-white bg-opacity-50 rounded shadow-sm">
+                            <h6 class="text-muted mb-1">Est. Yield/Hectare</h6>
+                            <h4 class="fw-bold mb-0">{{ prediction.expected_yield_per_hectare|floatformat:1 }} tons</h4>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 bg-white bg-opacity-50 rounded shadow-sm">
+                            <h6 class="text-muted mb-1">Est. Profit</h6>
+                            <h4 class="fw-bold mb-0">₹{{ prediction.estimated_profit|floatformat:2 }}</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-5">
+                    <a href="{% url 'dashboard' %}" class="btn btn-outline-success rounded-pill px-4 me-2">Back to Dashboard</a>
+                    <button class="btn btn-success rounded-pill px-4" onclick="window.print()"><i class="fa-solid fa-download"></i> Download Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

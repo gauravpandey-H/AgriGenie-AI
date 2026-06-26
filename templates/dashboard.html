@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}AgriGenie AI - Dashboard{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Welcome back, Farmer! 👋</h2>
+        <a href="{% url 'chat_interface' %}" class="btn btn-success rounded-pill"><i class="fa-solid fa-microphone"></i> Ask AI</a>
+    </div>
+
+    <!-- Quick Action Cards -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-3">
+            <div class="glass-panel p-4 text-center h-100 feature-card">
+                <i class="fa-solid fa-cloud-sun fa-2x text-warning mb-3"></i>
+                <h5 class="fw-bold">Weather</h5>
+                <p class="text-muted small">28°C, Clear Sky</p>
+                <a href="#" class="btn btn-sm btn-outline-success rounded-pill mt-2">View Forecast</a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="glass-panel p-4 text-center h-100 feature-card">
+                <i class="fa-solid fa-leaf fa-2x text-success mb-3"></i>
+                <h5 class="fw-bold">Soil Health</h5>
+                <p class="text-muted small">Optimal NPK levels</p>
+                <a href="{% url 'predict_crop' %}" class="btn btn-sm btn-outline-success rounded-pill mt-2">Analyze Soil</a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="glass-panel p-4 text-center h-100 feature-card">
+                <i class="fa-solid fa-seedling fa-2x text-primary mb-3"></i>
+                <h5 class="fw-bold">Recommended Crop</h5>
+                <p class="text-muted small">Wheat (92% Match)</p>
+                <a href="{% url 'predict_crop' %}" class="btn btn-sm btn-outline-success rounded-pill mt-2">Get Advice</a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="glass-panel p-4 text-center h-100 feature-card">
+                <i class="fa-solid fa-bug text-danger fa-2x mb-3"></i>
+                <h5 class="fw-bold">Disease Alerts</h5>
+                <p class="text-muted small">No recent threats</p>
+                <a href="{% url 'disease_detect' %}" class="btn btn-sm btn-outline-success rounded-pill mt-2">Scan Leaf</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="row g-4">
+        <!-- Market Trend Chart -->
+        <div class="col-lg-8">
+            <div class="glass-panel p-4 h-100">
+                <h5 class="fw-bold mb-4">Market Price Trend (Wheat)</h5>
+                <canvas id="marketChart" height="100"></canvas>
+            </div>
+        </div>
+        <!-- Soil NPK Gauge -->
+        <div class="col-lg-4">
+            <div class="glass-panel p-4 h-100">
+                <h5 class="fw-bold mb-4">Soil Composition</h5>
+                <canvas id="soilChart" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Market Chart
+    const marketCtx = document.getElementById('marketChart').getContext('2d');
+    new Chart(marketCtx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                label: 'Price (₹/Quintal)',
+                data: [2100, 2150, 2200, 2180, 2300, 2350],
+                borderColor: '#2e7d32',
+                backgroundColor: 'rgba(46, 125, 50, 0.1)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } }
+        }
+    });
+
+    // Soil Chart (Doughnut)
+    const soilCtx = document.getElementById('soilChart').getContext('2d');
+    new Chart(soilCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Nitrogen', 'Phosphorus', 'Potassium'],
+            datasets: [{
+                data: [40, 30, 30],
+                backgroundColor: ['#2e7d32', '#0277bd', '#fbc02d'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            cutout: '70%',
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+</script>
+{% endblock %}

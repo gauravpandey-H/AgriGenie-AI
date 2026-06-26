@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}AgriGenie AI - Disease Detection{% endblock %}
+
+{% block content %}
+<div class="container py-5 mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="glass-panel p-5 text-center">
+                <i class="fa-solid fa-microscope text-danger fa-4x mb-3 floating-element"></i>
+                <h3 class="fw-bold">Crop Disease Detection</h3>
+                <p class="text-muted">Upload an image of a damaged leaf or seed, and our AI will instantly identify the disease and suggest treatments.</p>
+                
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} mt-3">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+                
+                {% if form.errors %}
+                    <div class="alert alert-danger mt-3 text-start">
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                                <strong>{{ error }}</strong><br>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <form method="POST" enctype="multipart/form-data" class="mt-4">
+                    {% csrf_token %}
+                    <div class="mb-4 text-start">
+                        <label class="form-label fw-bold">Upload Leaf Image</label>
+                        {{ form.image }}
+                    </div>
+                    <button type="submit" class="btn btn-danger btn-lg w-100 rounded-pill"><i class="fa-solid fa-search"></i> Analyze Image</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    input[type="file"] {
+        display: block;
+        width: 100%;
+        padding: 0.75rem;
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+    }
+    .btn-danger {
+        background: linear-gradient(45deg, #e53935, #b71c1c);
+        border: none;
+    }
+</style>
+{% endblock %}

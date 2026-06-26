@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}AgriGenie AI - Login{% endblock %}
+
+{% block content %}
+<div class="container py-5 mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="glass-panel p-5">
+                <div class="text-center mb-4">
+                    <i class="fa-solid fa-leaf text-success fa-3x mb-3"></i>
+                    <h3 class="fw-bold">Welcome Back</h3>
+                    <p class="text-muted">Log in to your AgriGenie AI dashboard</p>
+                </div>
+                
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        {{ form.username }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        {{ form.password }}
+                    </div>
+                    <button type="submit" class="btn btn-success w-100 rounded-pill py-2 mt-3">Log In</button>
+                </form>
+                
+                <div class="text-center mt-4">
+                    <p class="text-muted small">Don't have an account? <a href="{% url 'register' %}" class="text-success fw-bold text-decoration-none">Sign Up</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Quick styling for django auth forms */
+    input[type="text"], input[type="password"] {
+        width: 100%;
+        padding: 0.75rem;
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+        background: rgba(255, 255, 255, 0.8);
+    }
+</style>
+{% endblock %}

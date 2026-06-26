@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}AgriGenie AI - Assistant{% endblock %}
+
+{% block content %}
+<div class="container py-5 mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="glass-panel d-flex flex-column" style="height: 75vh;">
+                <!-- Header -->
+                <div class="p-4 border-bottom border-success border-opacity-25 d-flex align-items-center bg-white bg-opacity-50" style="border-radius: 16px 16px 0 0;">
+                    <i class="fa-solid fa-robot fa-2x text-success me-3"></i>
+                    <div>
+                        <h5 class="fw-bold mb-0">AgriGenie Assistant</h5>
+                        <small class="text-success fw-bold"><i class="fa-solid fa-circle text-success" style="font-size: 8px;"></i> Online</small>
+                    </div>
+                </div>
+
+                <!-- Chat Box -->
+                <div id="chat-box" class="flex-grow-1 p-4 overflow-auto d-flex flex-column gap-3" style="background: rgba(255, 255, 255, 0.4);">
+                    
+                    <!-- Welcome Message -->
+                    <div class="d-flex align-items-start max-w-75">
+                        <div class="bg-success text-white p-3 rounded-4 rounded-top-left-0 shadow-sm">
+                            Hello {{ user.first_name|default:user.username }}! 👋 I'm your AI farming assistant. You can ask me about weather, crop recommendations, market prices, or plant diseases.
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Input Area -->
+                <div class="p-3 bg-white bg-opacity-75" style="border-radius: 0 0 16px 16px;">
+                    <form id="chat-form" class="d-flex gap-2 align-items-center">
+                        {% csrf_token %}
+                        <input type="text" id="user-input" class="form-control rounded-pill px-4 py-2" placeholder="Ask me anything..." autocomplete="off" required>
+                        <button type="submit" class="btn btn-success rounded-circle shadow-sm" style="width: 45px; height: 45px; flex-shrink: 0;">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Chat bubbles styling */
+    .rounded-top-left-0 { border-top-left-radius: 0 !important; }
+    .rounded-top-right-0 { border-top-right-radius: 0 !important; }
+    .max-w-75 { max-width: 80%; }
+    
+    /* Scrollbar */
+    #chat-box::-webkit-scrollbar { width: 6px; }
+    #chat-box::-webkit-scrollbar-thumb { background: rgba(46, 125, 50, 0.3); border-radius: 10px; }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const chatForm = document.getElementById('chat-form');
+        const userInput = document.getElementById('user-input');
+        const chatBox = document.getElementById('chat-box');
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        chatForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            // 1. Append User Message
+            appendMessage(message, 'user');
+            userInput.value = '';
+
+            // 2. Show Typing Indicator
+            const typingId = 'typing-' + Date.now();
+            appendTypingIndicator(typingId);
+            scrollToBottom();
+
+            // 3. Send AJAX Request
+            fetch("{% url 'chat_api' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Remove Typing Indicator
+                const typingEl = document.getElementById(typingId);
+                if (typingEl) typingEl.remove();
+
+                if (data.error) {
+                    appendMessage("Sorry, I encountered an error. Please try again.", 'bot');
+                } else {
+                    appendMessage(data.response, 'bot');
+                }
+                scrollToBottom();
+            })
+            .catch(error => {
+                const typingEl = document.getElementById(typingId);
+                if (typingEl) typingEl.remove();
+                appendMessage("Network error. Please try again.", 'bot');
+                scrollToBottom();
+            });
+        });
+
+        function appendMessage(text, sender) {
+            const wrapper = document.createElement('div');
+            wrapper.className = `d-flex align-items-start max-w-75 ${sender === 'user' ? 'align-self-end flex-row-reverse' : ''}`;
+            
+            const bubble = document.createElement('div');
+            if (sender === 'user') {
+                bubble.className = "bg-white text-dark p-3 rounded-4 rounded-top-right-0 shadow-sm border border-success border-opacity-25";
+            } else {
+                bubble.className = "bg-success text-white p-3 rounded-4 rounded-top-left-0 shadow-sm";
+            }
+            bubble.innerText = text;
+            
+            wrapper.appendChild(bubble);
+            chatBox.appendChild(wrapper);
+            scrollToBottom();
+        }
+
+        function appendTypingIndicator(id) {
+            const wrapper = document.createElement('div');
+            wrapper.id = id;
+            wrapper.className = "d-flex align-items-start max-w-75 text-muted small ms-2";
+            wrapper.innerHTML = `<i>AgriGenie is typing...</i>`;
+            chatBox.appendChild(wrapper);
+        }
+
+        function scrollToBottom() {
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    });
+</script>
+{% endblock %}

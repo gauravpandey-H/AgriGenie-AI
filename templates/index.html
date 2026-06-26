@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}AgriGenie AI - Empowering Farmers{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section text-center py-5 position-relative">
+    <div class="container position-relative z-index-1">
+        <div class="row align-items-center">
+            <div class="col-lg-6 text-lg-start text-center mb-5 mb-lg-0">
+                <span class="badge bg-success bg-opacity-25 text-success rounded-pill px-3 py-2 mb-3">#1 AI Farming Assistant</span>
+                <h1 class="display-4 fw-bold mb-4 hero-title">Empowering Farmers with <br><span class="hero-highlight">Artificial Intelligence</span></h1>
+                <p class="lead text-muted mb-4">Use AI to recommend profitable crops, detect diseases, monitor soil health, analyze weather, and maximize agricultural productivity.</p>
+                <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
+                    <a href="#" class="btn btn-success btn-lg px-5 py-3 rounded-pill shadow-sm">Get Started</a>
+                    <a href="#features" class="btn btn-outline-secondary btn-lg px-5 py-3 rounded-pill glass-panel">Explore Features</a>
+                </div>
+            </div>
+            <div class="col-lg-6 position-relative">
+                <div class="glass-panel p-4 floating-element mx-auto" style="max-width: 400px;">
+                    <div class="text-center mb-3">
+                        <i class="fa-solid fa-robot text-success fa-4x mb-3"></i>
+                        <h4 class="fw-bold">AI Assistant Ready</h4>
+                        <p class="text-muted small">Ask me about weather, crops, or market prices in your preferred language.</p>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="d-block text-muted small">Current Weather</span>
+                            <strong>28°C, Clear Sky</strong>
+                        </div>
+                        <i class="fa-solid fa-sun text-warning fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Statistics Section -->
+<section class="py-5 glass-panel mx-3 mx-md-5 my-5 border-0">
+    <div class="container">
+        <div class="row text-center g-4">
+            <div class="col-md-3 col-6">
+                <h2 class="display-5 fw-bold text-success">10k+</h2>
+                <p class="text-muted">Farmers Supported</p>
+            </div>
+            <div class="col-md-3 col-6">
+                <h2 class="display-5 fw-bold text-success">50k+</h2>
+                <p class="text-muted">Crop Predictions</p>
+            </div>
+            <div class="col-md-3 col-6">
+                <h2 class="display-5 fw-bold text-success">98%</h2>
+                <p class="text-muted">Accuracy</p>
+            </div>
+            <div class="col-md-3 col-6">
+                <h2 class="display-5 fw-bold text-success">12+</h2>
+                <p class="text-muted">Languages</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="py-5 my-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Platform Features</h2>
+            <p class="text-muted">Everything you need to modernize your farm.</p>
+        </div>
+        <div class="row g-4">
+            <!-- Feature 1 -->
+            <div class="col-md-4">
+                <div class="feature-card glass-panel text-center">
+                    <div class="icon-wrapper mx-auto">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+                    <h5 class="fw-bold">Crop Recommendation</h5>
+                    <p class="text-muted small">AI-driven suggestions based on soil and weather data.</p>
+                </div>
+            </div>
+            <!-- Feature 2 -->
+            <div class="col-md-4">
+                <div class="feature-card glass-panel text-center">
+                    <div class="icon-wrapper mx-auto text-primary" style="background: rgba(2, 119, 189, 0.1);">
+                        <i class="fa-solid fa-cloud-sun-rain"></i>
+                    </div>
+                    <h5 class="fw-bold">Weather Forecast</h5>
+                    <p class="text-muted small">7-day hyper-local weather predictions and alerts.</p>
+                </div>
+            </div>
+            <!-- Feature 3 -->
+            <div class="col-md-4">
+                <div class="feature-card glass-panel text-center">
+                    <div class="icon-wrapper mx-auto text-danger" style="background: rgba(220, 53, 69, 0.1);">
+                        <i class="fa-solid fa-microscope"></i>
+                    </div>
+                    <h5 class="fw-bold">Disease Detection</h5>
+                    <p class="text-muted small">Upload a leaf image for instant disease diagnosis.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="py-5" style="background: rgba(15, 32, 39, 0.5); backdrop-filter: blur(10px); border-top: 1px solid var(--glass-border);">
+    <div class="container text-center">
+        <h2 class="fw-bold mb-5">How It Works</h2>
+        <div class="d-flex justify-content-center align-items-center flex-wrap gap-4">
+            <div>
+                <div class="icon-wrapper mx-auto mb-2 glass-panel shadow-sm" style="color: var(--primary-color); border-color: var(--primary-color);"><i class="fa-solid fa-map-location-dot"></i></div>
+                <p class="small fw-bold text-white">1. Location</p>
+            </div>
+            <i class="fa-solid fa-arrow-right text-muted d-none d-md-block"></i>
+            <div>
+                <div class="icon-wrapper mx-auto mb-2 glass-panel shadow-sm" style="color: var(--primary-color); border-color: var(--primary-color);"><i class="fa-solid fa-flask"></i></div>
+                <p class="small fw-bold text-white">2. Soil Data</p>
+            </div>
+            <i class="fa-solid fa-arrow-right text-muted d-none d-md-block"></i>
+            <div>
+                <div class="icon-wrapper mx-auto mb-2 glass-panel shadow-sm" style="color: var(--primary-color); border-color: var(--primary-color);"><i class="fa-solid fa-brain"></i></div>
+                <p class="small fw-bold text-white">3. AI Magic</p>
+            </div>
+            <i class="fa-solid fa-arrow-right text-muted d-none d-md-block"></i>
+            <div>
+                <div class="icon-wrapper mx-auto mb-2 glass-panel shadow-sm" style="color: var(--primary-color); border-color: var(--primary-color);"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                <p class="small fw-bold text-white">4. Results</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
